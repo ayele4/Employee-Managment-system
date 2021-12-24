@@ -7,3 +7,7 @@ EmployeeTracker is a simple command line interface for managing and tracking emp
 It allows the user to view all employess departments and roles, departments and roles within the company.
 
 It's simple to use and helpes to keep track of growing companies.
+
+## Walkthrough video
+
+https://drive.google.com/file/d/1TGrb-_yJbJtSzyzgqxaZ3yd9iSnYWBMU/view?usp=sharing
