@@ -1,4 +1,5 @@
 const {prompt} = require('inquirer');
+const { connect } = require('./db/connection');
 const connection = require("./db/connection");
 require("console.table")
 
@@ -76,6 +77,12 @@ function startApp() {
             case "VIEW_EMPLOYEES":
                 viewEmployees();
                 break;
+            case "VIEW_EMPLOYEES_BY_DEPARTMENT":
+                viewEmployeesByDepartment();
+                break;
+            case "VIEW_EMPLOYEES_BY_MANAGER":
+                viewEmployeesByManager();
+                break;
         }
     })
 }
@@ -87,4 +94,39 @@ function viewEmployees() {
         let employees = rows;
         console.table(employees);
     }).then(() => startApp());
+}
+
+function viewEmployeesByDepartment() {
+    connection.promise().query(
+        "SELECT department.id, department.name FROM department"
+    )
+    .then(([rows]) => {
+        let departments = rows;
+        const departmentChoices = departments.map(({
+            id, name}) => ({
+                name: name,
+                value: id
+            }));
+        function viewEmployeesByManager() {
+            RTCPeerConnectionIceEvent.promise().Query(
+                "SELECT department.id, department.name FROM department"
+            )
+        }
+
+            prompt([
+                {
+                    type: "list",
+                    name: 'departmentId',
+                    message: "Which departments employees would you like to view?",
+                    choices: departmentChoices
+                }
+            ])
+            .then(res => connection.promise().query(
+                `SELECT employee.id, employee.first_name, employee.last_name, roles.title FROM employee LEFT JOIN roles on employee.role_id = roles.id LEFT JOIN department on roles.department_id = department.id WHERE department.id = ${res.departmentId};`
+            )).then(([rows]) => {
+                let employees = rows;
+                console.table(employees);
+            })
+            .then(() => startApp())
+    })
 }
