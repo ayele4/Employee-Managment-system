@@ -80,9 +80,8 @@ function startApp() {
             case "VIEW_EMPLOYEES_BY_DEPARTMENT":
                 viewEmployeesByDepartment();
                 break;
-            case "VIEW_EMPLOYEES_BY_MANAGER":
-                viewEmployeesByManager();
-                break;
+            
+                
         }
     })
 }
@@ -107,11 +106,14 @@ function viewEmployeesByDepartment() {
                 name: name,
                 value: id
             }));
-        function viewEmployeesByManager() {
+        function viewEmployees() {
             RTCPeerConnectionIceEvent.promise().Query(
-                "SELECT department.id, department.name FROM department"
+                "SELECT department.id, department.name From department"
             )
         }
+            
+    
+        
 
             prompt([
                 {
@@ -129,4 +131,4 @@ function viewEmployeesByDepartment() {
             })
             .then(() => startApp())
     })
-}
+        }
